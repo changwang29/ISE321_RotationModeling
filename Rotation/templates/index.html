@@ -13,26 +13,18 @@
       <p>Please enter details to calculate the QTc:</p>
  
       <form action="{{ url_for('index') }}" method="POST">
-        <label>Enter sex:</label>
-        <div class="form-check">
-          <input class="form-check-input" type="radio" name="sex" value="m" id="male-option">
-          <label class="form-check-label" for="male-option">
-            Male
-          </label>
-        </div>
-        <div class="form-check">
-          <input class="form-check-input" type="radio" name="sex" value="f" id="female-option" checked>
-          <label class="form-check-label" for="female-option">
-            Female
-          </label>
-        </div>
+        
         <br>
-        <label>Enter HR (BPM):</label>
+        <label>Enter C1:</label>
         <input type="number" name="hr">
         <br><br>
-        <label>Enter QT interval (msec):</label>
+        <label>Enter C2:</label>
         <input type="number" name="qt">
         </br><br>
+        <label>Enter C3:</label>
+        <input type="number" name="sex">
+        <br><br>
+
         <input type="submit" name="next" value="Next">
      </form>
      <br><br>
