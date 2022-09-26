@@ -2,25 +2,25 @@ import gurobipy as gp
 from gurobipy import GRB
 
 # Create a new model
-m = gp.Model("bilinear")
+m = gp.Model("linear")
 
 # Create variables
 x = m.addVar(name="x")
 y = m.addVar(name="y")
-z = m.addVar(name="z")
+
 
 # Set objective: maximize x
-m.setObjective(1.0*x, GRB.MAXIMIZE)
+m.setObjective(5.0*x + 7.0*y, GRB.MAXIMIZE)
 
-# Add linear constraint: x + y + z <= 10
-c1 = requst.
-m.addConstr(x + y + z <= 10, "c0")
+# Add linear constraint: x  <= 6
 
-# Add bilinear inequality constraint: x * y <= 2
-m.addConstr(x*y <= 2, "bilinear0")
+m.addConstr(x  <= 6, "c1")
 
-# Add bilinear equality constraint: x * z + y * z == 1
-m.addConstr(x*z + y*z == 1, "bilinear1")
+# Add bilinear inequality constraint: 3x + 4y <= 24
+m.addConstr(3*x + 4*y <= 24, "c2")
+
+# Add bilinear equality constraint: x * z + y * z == 7
+m.addConstr(x+ y <= 7, "c3")
 
 # First optimize() call will fail - need to set NonConvex to 2
 try:
@@ -32,10 +32,13 @@ except gp.GurobiError:
 m.Params.NonConvex = 2
 m.optimize()
 
-m.printAttr('x')
+a = m.getObjective()
+print(a.getValue())
 
-# Constrain 'x' to be integral and solve again
-x.VType = GRB.INTEGER
-m.optimize()
+# m.printAttr('x')
 
-m.printAttr('x')
+# # Constrain 'x' to be integral and solve again
+# x.VType = GRB.INTEGER
+# m.optimize()
+
+# m.printAttr('x')
