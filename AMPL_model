@@ -67,7 +67,7 @@ param B;
 # Defines parameter for the minimum number of people for each rotation
 param p_min{rotations} >= 0;
 
-# Defines paramter for the maximum number of people for each rotation
+# Defines parameter for the maximum number of people for each rotation
 param p_max{rotations} >= 0;
 
 # Defines parameter for the minimum number of times a person must do the specified rotation
