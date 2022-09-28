@@ -1,3 +1,6 @@
+# Useful Links:
+# https://www.youtube.com/watch?v=vnLc_3VnVcw
+# https://www.youtube.com/watch?v=0EUX3ua2liU
 import gurobipy as gp
 from gurobipy import GRB
 
@@ -64,6 +67,9 @@ r_min = {people: 0, rotations:0} # Not sure if it is correct implementation
 r_max = {people: 0, rotations: 0} # Not sure if it is correct implementation
 
 # Variables
+# Useful links:
+# https://www.gurobi.com/documentation/9.5/refman/py_model_addvars.html
+# https://www.gurobi.com/documentation/9.5/refman/variables.html
 # Defines the decision variables (x[p,r,b]=1 if person p assigned to rotation r in block b; x[p,r,b]=0 otherwise)
 p = m.addVar(vType=GRB.BINARY, name="p")
 r = m.addVar(vType=GRB.BINARY, name="r")
