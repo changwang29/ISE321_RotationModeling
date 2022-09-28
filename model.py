@@ -55,13 +55,16 @@ impossibleAssignments = {"impossible1": {"Resident3": 1, "Rotation1": 1, "1": 1}
 # NOT INCLUDED #
 
 # Defines parameter for the minimum number of people for each rotation
-p_min = {rotations: 0} # Not sure if it is correct implementation
+p_min = {"Rotation1": 0, "Rotation2": 0, "Rotation3": 0, "Rotation4": 0}
 
 # Defines parameter for the minimum number of people for each rotation
-p_max = {rotations: 0} # Not sure if it is correct implementation
+p_max = {"Rotation1": 0, "Rotation2": 0, "Rotation3": 0, "Rotation4": 0}
 
 # Defines parameter for the minimum number of times a person must do the specified rotation
 r_min = {people: 0, rotations:0} # Not sure if it is correct implementation
+# KEY: (Resident1, Rotation1)
+# (Resident2, Rotation1)
+# (Resident, Rotation)
 
 # Defines parameter for the maximum number of times a person must do the specified rotation
 r_max = {people: 0, rotations: 0} # Not sure if it is correct implementation
@@ -70,9 +73,13 @@ r_max = {people: 0, rotations: 0} # Not sure if it is correct implementation
 # Useful links:
 # https://www.gurobi.com/documentation/9.5/refman/py_model_addvars.html
 # https://www.gurobi.com/documentation/9.5/refman/variables.html
+# IMPORTANT # https://gurobi.github.io/modeling-examples/technician_routing_scheduling/technician_routing_scheduling.html
 # Defines the decision variables (x[p,r,b]=1 if person p assigned to rotation r in block b; x[p,r,b]=0 otherwise)
-p = m.addVar(vType=GRB.BINARY, name="p")
-r = m.addVar(vType=GRB.BINARY, name="r")
-b = m.addVar(vType=GRB.BINARY, name="b")
+# x = m.addVars(vType=GRB.BINARY, name="p") # x = m. addVars(people, rotations, blocks)
+# r = m.addVar(vType=GRB.BINARY, name="r")
+# b = m.addVar(vType=GRB.BINARY, name="b")
+
 
 # Defines variables for consecutive busy rotations
+# Y = m.addVars(people, busyR,busyR, np.arrange(1,B)
+
