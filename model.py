@@ -1,13 +1,16 @@
-# Useful Links:
-# https://www.youtube.com/watch?v=vnLc_3VnVcw
-# https://www.youtube.com/watch?v=0EUX3ua2liU
 import gurobipy as gp
 from gurobipy import GRB
 
-# Model
+#########
+# MODEL #
+#########
+
 m = gp.Model("scheduling")
 
-# Sets & Parameters
+########
+# SETS #
+########
+
 # Defines the (ordered) set of people
 people = ["Resident1", "Resident2", "Resident3", "Resident4"]
 
@@ -54,6 +57,14 @@ impossibleAssignments = {"impossible1": {"Resident3": 1, "Rotation1": 1, "1": 1}
 # Defines set of impossible rotations for blocks
 # NOT INCLUDED #
 
+##############
+# PARAMETERS #
+##############
+
+P = [p for p in people]
+R = [r for r in rotations]
+B = [b for b in blocks]
+
 # Defines parameter for the minimum number of people for each rotation
 p_min = {"Rotation1": 0, "Rotation2": 0, "Rotation3": 0, "Rotation4": 0}
 
@@ -61,25 +72,36 @@ p_min = {"Rotation1": 0, "Rotation2": 0, "Rotation3": 0, "Rotation4": 0}
 p_max = {"Rotation1": 0, "Rotation2": 0, "Rotation3": 0, "Rotation4": 0}
 
 # Defines parameter for the minimum number of times a person must do the specified rotation
-r_min = {people: 0, rotations:0} # Not sure if it is correct implementation
-# KEY: (Resident1, Rotation1)
-# (Resident2, Rotation1)
-# (Resident, Rotation)
+r_min = {[people, rotations]: 0}
 
 # Defines parameter for the maximum number of times a person must do the specified rotation
-r_max = {people: 0, rotations: 0} # Not sure if it is correct implementation
+r_max = {[people, rotations]: 0}
 
-# Variables
-# Useful links:
-# https://www.gurobi.com/documentation/9.5/refman/py_model_addvars.html
-# https://www.gurobi.com/documentation/9.5/refman/variables.html
-# IMPORTANT # https://gurobi.github.io/modeling-examples/technician_routing_scheduling/technician_routing_scheduling.html
+#############
+# VARIABLES #
+#############
+
 # Defines the decision variables (x[p,r,b]=1 if person p assigned to rotation r in block b; x[p,r,b]=0 otherwise)
-# x = m.addVars(vType=GRB.BINARY, name="p") # x = m. addVars(people, rotations, blocks)
-# r = m.addVar(vType=GRB.BINARY, name="r")
-# b = m.addVar(vType=GRB.BINARY, name="b")
-
+x = m.addVars(people, rotations, blocks, vtype=GRB.BINARY)
 
 # Defines variables for consecutive busy rotations
-# Y = m.addVars(people, busyR,busyR, np.arrange(1,B)
+y = m.addVars(people, busyRotations, busyRotations, blocks, vtype=GRB.BINARY)
 
+#############
+# OBJECTIVE #
+#############
+
+#m.setObjective()
+# NEEDS IMPLEMENTATION
+
+###############
+# CONSTRAINTS #
+###############
+
+# NEEDS IMPLEMENTATION
+
+#########
+# SOLVE #
+#########
+
+# NEEDS IMPLEMENTATION
