@@ -105,3 +105,9 @@ y = m.addVars(people, busyRotations, busyRotations, blocks, vtype=GRB.BINARY)
 #########
 
 # NEEDS IMPLEMENTATION
+
+###########
+# DISPLAY #
+###########
+
+# NEEDS IMPLEMENTATION
