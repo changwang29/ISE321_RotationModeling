@@ -171,7 +171,10 @@ def assignmentsThatCannotHappen(people):
 # DISPLAY #
 ###########
 
-
-
+def display(people):
+    for p in people:
+        for i in range(len(p.rotation)):
+            print (p.person[i] + " " + p.rotation[i] + " " + p.block[i])
+            
 
 
