@@ -1,3 +1,4 @@
+from operator import truediv
 import gurobipy as gp
 from gurobipy import GRB
 
@@ -91,14 +92,74 @@ y = m.addVars(people, busyRotations, busyRotations, blocks, vtype=GRB.BINARY)
 # OBJECTIVE #
 #############
 
-#m.setObjective()
-# NEEDS IMPLEMENTATION
+m.setObjective()
+class objective:
+    def __init__(self, person, rotation, block, allYearResident, partialYearResident, mustDo, busyRotation, priority, preference, impossibleAssignment):
+        self.person = person
+        self.rotation = rotation
+        self.block = block
+        self.allYearResident = allYearResident
+        self.partialYearResident = partialYearResident
+        self.mustDo = mustDo
+        self.busyRotation = busyRotation
+        self.priority = priority
+        self.preference = preference
+        self.impossibleAssignment = impossibleAssignment
+    
+
 
 ###############
 # CONSTRAINTS #
 ###############
 
-# NEEDS IMPLEMENTATION
+def personOneAssignmentPerBlock(people):
+    for p in people:
+        for i in range(len(p.rotation)):
+            if (p.block[i] + p.rotation > 1):
+                return False
+    return True
+
+def rotationCoverage(people):
+    for p in people:
+        for i in range(len(p.rotation)):
+            if ( p_max < p.person[i] or p_min > p.person[i]):
+                return False
+    return True
+
+def peopleRotationBounds(people):
+    for p in people:
+        for i in range(len(p.rotation)):
+            if ( r_max < p.rotation[i] or r_min > p.rotation[i]):
+                return False
+    return True
+
+def allYearResidentsAssignedToEachMustDoRotation(people):
+    for p in people:
+        num = 0
+        for i in range(len(p.allYearResident)):
+            num += p.allYearResident[i]
+    if (num >= 1):
+        return True
+    return False
+
+
+def priorityAssignments(people):
+    for p in people:
+        for i in range(len(p.rotation)):
+            if ( p.priority[i] == 0):
+                return False
+    return True
+
+def assignmentsThatCannotHappen(people):
+    for p in people:
+        for i in range(len(p.rotation)):
+            if ( p.impossibleAssignment[i] == 1):
+                return False
+    return True
+
+
+
+
 
 #########
 # SOLVE #
@@ -110,4 +171,7 @@ y = m.addVars(people, busyRotations, busyRotations, blocks, vtype=GRB.BINARY)
 # DISPLAY #
 ###########
 
-# NEEDS IMPLEMENTATION
+
+
+
+
