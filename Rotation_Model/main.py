@@ -66,19 +66,51 @@ def index():
     # Store data to table
     residentName = request.form['residentName']
     allYear = request.form['allYear']
+   
+    
+    # write the input data to the databse
+    db.session.add(Store_Resident_data(residentName,allYear))
+    db.session.commit()
+    
+    # render result 
+    result = calculate(form)
+  # render the index.html file stored in the templates folder
+  return render_template('index.html', result=result)
+
+@app.route('/index2', methods=['GET', 'POST'])
+def index2():
+  result = False
+  if not os.path.exists(os.path.join(basedir, 'qtdata.db')):
+    db.create_all()
+  if request.method == 'POST':
+    form = request.form
+
+    # Store data to table
+   
     rotationName = request.form['rotationName']
     mustDo = request.form['mustDo']
     busy = request.form['busy']
     
     # write the input data to the databse
-    db.session.add(Store_Resident_data(residentName,allYear))
-    db.session.commit()
+    
     db.session.add(Store_Rotation_data(rotationName,mustDo, busy))
     db.session.commit()
     # render result 
     result = calculate(form)
   # render the index.html file stored in the templates folder
-  return render_template('index.html', result=result)
+  return render_template('index2.html', result=result)
+
+
+@app.route('/myData', methods=['GET'])
+def myData():
+  rotationDatas = Store_Rotation_data.query.all()
+  return render_template('myData.html', rotationDatas=rotationDatas)
+
+@app.route('/myData2', methods=['GET'])
+def myData2():
+  residentDatas = Store_Resident_data.query.all()
+  return render_template('myData2.html', residentDatas=residentDatas)
+
 
 
 def calculate(form):

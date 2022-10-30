@@ -1,6 +1,47 @@
 <!DOCTYPE html>
-<html>
+<html lang="en">
   <head>
+    <meta charset="UTF-8">
+    <style>
+        .title {
+            margin: 5px;
+        }
+
+        .content {
+            margin: 5px;
+            width: 100%;
+            display: flex;
+            flex-direction: row;
+            flex-wrap: wrap;
+        }
+
+        .rotationData {
+            flex: 20%;
+            padding: 10px;
+            margin: 5px;
+            background-color: #f3f3f3;
+            inline-size: 100%;
+        }
+
+        .bio {
+            padding: 10px;
+            margin: 5px;
+            background-color: #ffffff;
+            color: #004835;
+        }
+
+        .name a {
+            color: #00a36f;
+            text-decoration: none;
+        }
+
+        nav a {
+            color: #d64161;
+            font-size: 3em;
+            margin-left: 50px;
+            text-decoration: none;
+        }
+    </style>
   <title>Rotation Scheduling Model</title>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
@@ -9,6 +50,12 @@
   <!--Import Bootstrap, which provides a free CSS framework to allow us easily produce more prefessional looking web content  -->
   </head>
   <body>
+    <nav>
+      <a href="{{ url_for('index2') }}">Next Form</a>
+      <a href="{{ url_for('myData') }}">Rotation Data</a>
+      <a href="{{ url_for('myData2') }}">Resident Data</a>
+      <a href="#">Schedule details</a>
+  </nav>
     <!-- Allow user to add input  -->
     <div id="calc" >
       <h1>Rotation Scheduling </h1>
@@ -35,42 +82,7 @@
         </label>
          </div>
         <br>
-        <label>Enter Rotation Name:</label>
-        <input type="text" name="rotationName">
-        <br><br>
-        <!-- Enter whether busy rotation -->
-        <label>Busy rotation?:</label>
-        <div class="form-check">
-          <input class="form-check-input" type="radio" name="busy" value="y" id="busy-option">
-          <label class="form-check-label" for="busy-option">
-          Busy Rotation
-        </label>
-        </div>
-        <div class="form-check">
-        <input class="form-check-input" type="radio" name="busy" value="n" id="notBusy-option" checked>
-        <label class="form-check-label" for="notBusy-option">
-            Not Busy Rotation 
-          </label>
-        </div>
-        <br>
-        <!-- Enter whether must do rotation -->
-        <label>Must-do rotation?:</label>
-        <div class="form-check">
-          <input class="form-check-input" type="radio" name="mustDo" value="y" id="mustDo-option">
-          <label class="form-check-label" for="busy-option">
-          Must-Do Rotation
-        </label>
-        </div>
-        <div class="form-check">
-        <input class="form-check-input" type="radio" name="mustDo" value="n" id="notMust-option" checked>
-        <label class="form-check-label" for="notBusy-option">
-            Not Must Rotation 
-          </label>
-        </div>
-        <!-- </br><br>
-        <label>Enter :</label>
-        <input type="number" name="c3">
-        <br><br> -->
+      
 
         <input type="submit" name="next" value="Next">
      </form>
