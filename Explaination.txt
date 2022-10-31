@@ -1,0 +1,18 @@
+Need to convert the model result to a csv file first and then import into the output part. 
+
+# output list is where we store the list of x variables when it's equal to 1
+output = []
+for v in m.getVars():
+    if v.x == 1: # When assign the resident to this rotation in the block 
+        # print('%s %g' % (v.varName,v.x))
+        print(v.varName) 
+        # varName's type is String. We need to strip unnecessary parts and store in the list 
+        output.append(re.split(',+', v.varName.strip(' x[]')))
+
+
+# Store everything in a table group by resident name
+num = np.array(output)
+sch = pd.DataFrame(num, columns=['Resident','Rotation','Block'])
+
+# Export as csv file 
+sch.to_csv('output_data.csv', index = False)
