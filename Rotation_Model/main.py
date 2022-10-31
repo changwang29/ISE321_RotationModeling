@@ -6,7 +6,7 @@ from flask import Flask, render_template, url_for, request, session
 from flask_sqlalchemy import SQLAlchemy  # This module is used for database management 
 import os # set the path of the databse relative to the Flask app
 from datetime import datetime 
-import pandas as pd 
+import pandas as pd
 
 # Database
 basedir = os.path.abspath(os.path.dirname(__file__)) # Get the path of current file: base directory
