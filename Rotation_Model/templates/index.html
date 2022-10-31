@@ -37,7 +37,7 @@
 
         nav a {
             color: #d64161;
-            font-size: 3em;
+            font-size: 1em;
             margin-left: 50px;
             text-decoration: none;
         }
@@ -51,7 +51,12 @@
   </head>
   <body>
     <nav>
-      <a href="{{ url_for('index2') }}">Next Form</a>
+      <a href="{{ url_for('index') }}">Resident</a> 
+      <a href="{{ url_for('index2') }}">Rotation</a>
+      <a href="{{ url_for('index3') }}">Preference</a>
+      <a href="{{ url_for('index4') }}">Priority</a>
+      <a href="{{ url_for('index5') }}">Impossible</a>
+      <a href="{{ url_for('index6') }}">Vacation</a>
       <a href="{{ url_for('myData') }}">Rotation Data</a>
       <a href="{{ url_for('myData2') }}">Resident Data</a>
       <a href="{{ url_for('table') }}">Schedule details</a>

@@ -38,8 +38,6 @@ def getData(dict,c):
     rotations = c.execute('SELECT Rotation_name FROM rotation WHERE Rotation_name IS NOT ""').fetchall()
     mustDo = c.execute('SELECT Rotation_name FROM rotation Where mustDo = "y"').fetchall()
     busyRotations = c.execute('SELECT Rotation_name FROM rotation Where busy = "y"').fetchall()
-
-
     blocks = ["Block1", "Block2", "Block3", "Block4"]
     priority = [("Resident2", "Rotation1", "Block2")]
     preference = [("Resident1", "Rotation2", "Block1")]
@@ -117,8 +115,14 @@ def getData(dict,c):
     dict['vacation'] = vacation
     p_min = {"Rotation1": 1, "Rotation2": 1, "Rotation3": 1, "Rotation4": 0}
     p_max = {"Rotation1": 1, "Rotation2": 1, "Rotation3": 2, "Rotation4": 2}
-    
+
     return p_min, p_max
+
+def checkDuplicates(list):
+    if len(list) == len(set(list)):
+        return False
+    else:
+        return True
 
 def model(m, dict,p_min, p_max):
     

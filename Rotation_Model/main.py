@@ -16,7 +16,6 @@ app.config['SQLALCHEMY_COMMIT_ON_TEARDOWN'] = True # Set database parameters usi
 db = SQLAlchemy(app) # Bind the databse instance to our application 
 
 # Define variables that relate to the column names in the table 
-# 
 class Store_Resident_data(db.Model):
   __tablename__ = 'resident'
   residentId = db.Column('Resident_id', db.Integer, primary_key = True) # Primary Key 
@@ -51,6 +50,64 @@ class Store_Rotation_data(db.Model):
     self.rotationName = rotationName
     self.mustDo = mustDo
     self.busy = busy
+
+class Store_Pref_data(db.Model):
+  __tablename__ = 'preference'
+  prefId = db.Column('Rotation_id', db.Integer, primary_key = True) # Primary Key 
+  # timestamp = db.Column('timestamp', db.DateTime)
+  residentname = db.Column('Resident_name', db.String(50))
+  rotationName = db.Column('Rotation_name', db.String(50))
+  block = db.Column('Block', db.String(50))
+
+  # Initialisation method to allow us to pass values for these fields
+  def __init__(self, residentname,rotationName,block):
+    # self.timestamp = datetime.now()
+    self.residentname = residentname
+    self.rotationName = rotationName
+    self.block = block
+
+class Store_Priority_data(db.Model):
+  __tablename__ = 'priority'
+  prifId = db.Column('Rotation_id', db.Integer, primary_key = True) # Primary Key 
+  # timestamp = db.Column('timestamp', db.DateTime)
+  residentname = db.Column('Resident_name', db.String(50))
+  rotationName = db.Column('Rotation_name', db.String(50))
+  block = db.Column('Block', db.String(50))
+
+  # Initialisation method to allow us to pass values for these fields
+  def __init__(self, residentname,rotationName,block):
+    # self.timestamp = datetime.now()
+    self.residentname = residentname
+    self.rotationName = rotationName
+    self.block = block
+
+class Store_Impo_data(db.Model):
+  __tablename__ = 'impossible'
+  impoId = db.Column('Rotation_id', db.Integer, primary_key = True) # Primary Key 
+  # timestamp = db.Column('timestamp', db.DateTime)
+  residentname = db.Column('Resident_name', db.String(50))
+  rotationName = db.Column('Rotation_name', db.String(50))
+  block = db.Column('Block', db.String(50))
+
+  # Initialisation method to allow us to pass values for these fields
+  def __init__(self, residentname,rotationName,block):
+    # self.timestamp = datetime.now()
+    self.residentname = residentname
+    self.rotationName = rotationName
+    self.block = block
+
+class Store_Vacation_data(db.Model):
+  __tablename__ = 'vacation'
+  vacId = db.Column('Rotation_id', db.Integer, primary_key = True) # Primary Key 
+  # timestamp = db.Column('timestamp', db.DateTime)
+  residentname = db.Column('Resident_name', db.String(50))
+  block = db.Column('Block', db.String(50))
+
+  # Initialisation method to allow us to pass values for these fields
+  def __init__(self, residentname,block):
+    # self.timestamp = datetime.now()
+    self.residentname = residentname
+    self.block = block
 
 @app.before_first_request
 def create_tables():
@@ -101,6 +158,97 @@ def index2():
   # render the index.html file stored in the templates folder
   return render_template('index2.html', result=result)
 
+@app.route('/index3', methods=['GET', 'POST'])
+def index3():
+  result = False
+  if not os.path.exists(os.path.join(basedir, 'qtdata.db')):
+    db.create_all()
+  if request.method == 'POST':
+    form = request.form
+
+    # Store data to table
+    pref_people = request.form['pref_people']
+    pref_rotation = request.form['pref_rotation']
+    pref_block = request.form['pref_block']
+    
+    # write the input data to the databse
+    
+    db.session.add(Store_Pref_data(pref_people,pref_rotation,pref_block))
+    db.session.commit()
+   
+    # render result 
+    result = calculate(form)
+  # render the index.html file stored in the templates folder
+  return render_template('index3.html', result=result)
+
+
+@app.route('/index4', methods=['GET', 'POST'])
+def index4():
+  result = False
+  if not os.path.exists(os.path.join(basedir, 'qtdata.db')):
+    db.create_all()
+  if request.method == 'POST':
+    form = request.form
+
+    # Store data to table
+    pri_people = request.form['pri_people']
+    pri_rotation = request.form['pri_rotation']
+    pri_block = request.form['pri_block']
+    
+    # write the input data to the databse
+    
+    db.session.add(Store_Priority_data(pri_people,pri_rotation,pri_block))
+    db.session.commit()
+   
+    # render result 
+    result = calculate(form)
+  # render the index.html file stored in the templates folder
+  return render_template('index4.html', result=result)
+  
+@app.route('/index5', methods=['GET', 'POST'])
+def index5():
+  result = False
+  if not os.path.exists(os.path.join(basedir, 'qtdata.db')):
+    db.create_all()
+  if request.method == 'POST':
+    form = request.form
+
+    # Store data to table
+    imp_people = request.form['imp_people']
+    imp_rotation = request.form['imp_rotation']
+    imp_block = request.form['imp_block']
+    
+    # write the input data to the databse
+    
+    db.session.add(Store_Impo_data(imp_people,imp_rotation,imp_block))
+    db.session.commit()
+   
+    # render result 
+    result = calculate(form)
+  # render the index.html file stored in the templates folder
+  return render_template('index5.html', result=result)
+
+
+@app.route('/index6', methods=['GET', 'POST'])
+def index6():
+  result = False
+  if not os.path.exists(os.path.join(basedir, 'qtdata.db')):
+    db.create_all()
+  if request.method == 'POST':
+    form = request.form
+
+    # Store data to table
+    vac_people = request.form['vac_people']
+    vac_block = request.form['vac_block']
+    
+    # write the input data to the databse
+    db.session.add(Store_Vacation_data(vac_people,vac_block))
+    db.session.commit()
+   
+    # render result 
+    result = calculate(form)
+  # render the index.html file stored in the templates folder
+  return render_template('index6.html', result=result)
 
 @app.route('/myData', methods=['GET'])
 def myData():
