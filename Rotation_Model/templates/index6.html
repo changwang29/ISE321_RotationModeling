@@ -60,13 +60,14 @@
       <a href="{{ url_for('myData') }}">Rotation Data</a>
       <a href="{{ url_for('myData2') }}">Resident Data</a>
       <a href="{{ url_for('table') }}">Schedule details</a>
+      <a href="{{ url_for('runModel') }}">Run Model</a>
   </nav>
     <!-- Allow user to add input  -->
     <div id="calc" >
       <h1>Rotation Scheduling </h1>
       <p>Please enter details to run the model:</p>
  
-      <form action="{{ url_for('index') }}" method="POST">
+      <form action="{{ url_for('index6') }}" method="POST">
         
        
         <label>Enter Vacation Set Name:</label>

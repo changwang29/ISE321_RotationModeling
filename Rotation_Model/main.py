@@ -7,6 +7,7 @@ from flask_sqlalchemy import SQLAlchemy  # This module is used for database mana
 import os # set the path of the databse relative to the Flask app
 from datetime import datetime 
 import pandas as pd 
+from new import model, constraints, solve, getData
 
 # Database
 basedir = os.path.abspath(os.path.dirname(__file__)) # Get the path of current file: base directory
@@ -116,14 +117,14 @@ def create_tables():
 @app.route('/', methods=['GET', 'POST'])
 def index():
   result = False
-  if not os.path.exists(os.path.join(basedir, 'qtdata.db')):
+  if not os.path.exists(os.path.join(basedir, 'data.db')):
     db.create_all()
   if request.method == 'POST':
     form = request.form
 
     # Store data to table
-    residentName = request.form['residentName']
-    allYear = request.form['allYear']
+    residentName = request.form.get('residentName',False)
+    allYear = request.form.get('allYear',False)
    
     
     # write the input data to the databse
@@ -138,13 +139,12 @@ def index():
 @app.route('/index2', methods=['GET', 'POST'])
 def index2():
   result = False
-  if not os.path.exists(os.path.join(basedir, 'qtdata.db')):
+  if not os.path.exists(os.path.join(basedir, 'data.db')):
     db.create_all()
   if request.method == 'POST':
     form = request.form
 
     # Store data to table
-   
     rotationName = request.form['rotationName']
     mustDo = request.form['mustDo']
     busy = request.form['busy']
@@ -161,15 +161,15 @@ def index2():
 @app.route('/index3', methods=['GET', 'POST'])
 def index3():
   result = False
-  if not os.path.exists(os.path.join(basedir, 'qtdata.db')):
+  if not os.path.exists(os.path.join(basedir, 'data.db')):
     db.create_all()
   if request.method == 'POST':
     form = request.form
 
     # Store data to table
-    pref_people = request.form['pref_people']
-    pref_rotation = request.form['pref_rotation']
-    pref_block = request.form['pref_block']
+    pref_people = request.form.get('pref_people', False)
+    pref_rotation = request.form.get('pref_rotation', False)
+    pref_block = request.form.get('pref_block', False)
     
     # write the input data to the databse
     
@@ -185,7 +185,7 @@ def index3():
 @app.route('/index4', methods=['GET', 'POST'])
 def index4():
   result = False
-  if not os.path.exists(os.path.join(basedir, 'qtdata.db')):
+  if not os.path.exists(os.path.join(basedir, 'data.db')):
     db.create_all()
   if request.method == 'POST':
     form = request.form
@@ -208,15 +208,15 @@ def index4():
 @app.route('/index5', methods=['GET', 'POST'])
 def index5():
   result = False
-  if not os.path.exists(os.path.join(basedir, 'qtdata.db')):
+  if not os.path.exists(os.path.join(basedir, 'data.db')):
     db.create_all()
   if request.method == 'POST':
     form = request.form
 
     # Store data to table
-    imp_people = request.form['imp_people']
-    imp_rotation = request.form['imp_rotation']
-    imp_block = request.form['imp_block']
+    imp_people = request.form.get('imp_people')
+    imp_rotation = request.form.get('imp_rotation')
+    imp_block = request.form.get('imp_block')
     
     # write the input data to the databse
     
@@ -232,7 +232,7 @@ def index5():
 @app.route('/index6', methods=['GET', 'POST'])
 def index6():
   result = False
-  if not os.path.exists(os.path.join(basedir, 'qtdata.db')):
+  if not os.path.exists(os.path.join(basedir, 'data.db')):
     db.create_all()
   if request.method == 'POST':
     form = request.form
@@ -266,14 +266,18 @@ def table():
 	data = pd.read_csv('/Users/chang/Desktop/School/Fall2022/ISE321_model/ISE321_RotationModeling/Rotation_Model/output_data.csv')
 	return render_template('table.html', tables=[data.to_html()], titles=[''])
 
+@app.route('/runModel', methods=['GET'])
+def runModel():
+  result = model()
+  return render_template('runModel.html', result = result)
 
 def calculate(form):
-  
-  result = model()
+  result = "!"
   return result 
   
 def model():
-  return "a"
+  result = "a"
+  return result
   
 
 if __name__ == "__main__":
