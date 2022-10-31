@@ -115,7 +115,7 @@ def myData2():
 @app.route('/table')
 def table():
 	# converting csv to html
-	data = pd.read_csv('output_data.csv')
+	data = pd.read_csv('/Users/chang/Desktop/School/Fall2022/ISE321_model/ISE321_RotationModeling/Rotation_Model/output_data.csv')
 	return render_template('table.html', tables=[data.to_html()], titles=[''])
 
 

@@ -18,6 +18,13 @@ def main():
     dict = {}
     p_min, p_max = getData(dict,c)
 
+    if(p_min == 1):
+        raise Exception('Block format is incorrect.')
+    if(p_min == 2):
+        raise Exception('There are duplicate variables.')
+    if(p_min == 3):
+        raise Exception('Variable missing in the database.')
+
     # Model 
     m = gp.Model("rotation_scheduling")
     model(m,dict,p_min, p_max)
@@ -31,6 +38,71 @@ def getData(dict,c):
     rotations = c.execute('SELECT Rotation_name FROM rotation WHERE Rotation_name IS NOT ""').fetchall()
     mustDo = c.execute('SELECT Rotation_name FROM rotation Where mustDo = "y"').fetchall()
     busyRotations = c.execute('SELECT Rotation_name FROM rotation Where busy = "y"').fetchall()
+
+
+    blocks = ["Block1", "Block2", "Block3", "Block4"]
+    priority = [("Resident2", "Rotation1", "Block2")]
+    preference = [("Resident1", "Rotation2", "Block1")]
+    impossibleAssignments = [("Resident3", "Rotation1", "Block1")]
+    vacation = [("Resident1", "Block1"),("Resident1", "Block4"),("Resident2", "Block3")]
+
+    # Capitalize people
+    for p in people:
+       p.capitalize()
+ 
+    # Capitalze blocks and check their format
+    for b in blocks:
+        b.capitalize()
+        str = b[0:5]
+        d = b[-1]
+ 
+        if(str != 'Block'):
+            return 1, 0
+      
+        if(d.isnumeric() == False):
+            return 1, 0
+    
+    # Check for duplicates
+    if checkDuplicates(people):
+        return 2, 0
+ 
+    if checkDuplicates(rotations):
+        return 2, 0
+ 
+    if checkDuplicates(blocks):
+        return 2, 0
+  
+    # Check whether variables exist in the database
+    for p in priority:
+        if p[0] not in people:
+            return 3, 0
+        if p[1] not in rotations:
+            return 3, 0
+        if p[2] not in blocks:
+            return 3, 0
+
+    for p in preference:
+        if p[0] not in people:
+            return 3, 0
+        if p[1] not in rotations:
+            return 3, 0
+        if p[2] not in blocks:
+            return 3, 0
+ 
+    for i in impossibleAssignments:
+        if i[0] not in people:
+            return 3, 0
+        if i[1] not in rotations:
+            return 3, 0
+        if i[2] not in blocks:
+            return 3, 0
+            
+    for v in vacation:
+        if v[0] not in people:
+            return 3, 0
+        if v[1] not in blocks:
+            return 3, 0
+
     dict['people'] = people
     dict['allYearResidents'] = allYearResidents
     dict['rotations'] = rotations
@@ -38,11 +110,11 @@ def getData(dict,c):
     dict['busyRotations'] = busyRotations
 
     # Inputs that still need to add to interface 
-    dict['blocks'] = ["Block1", "Block2", "Block3", "Block4"]
-    dict['priority'] =  [("Resident2", "Rotation1", "Block2")]   
-    dict['preference'] = [("Resident1", "Rotation2", "Block1")]
-    dict['impossibleAssignments'] = [("Resident3", "Rotation1", "Block1")]
-    dict['vacation'] = [("Resident1", "Block1"),("Resident1", "Block4"),("Resident2", "Block3")]
+    dict['blocks'] = blocks
+    dict['priority'] =  priority 
+    dict['preference'] = preference
+    dict['impossibleAssignments'] = impossibleAssignments
+    dict['vacation'] = vacation
     p_min = {"Rotation1": 1, "Rotation2": 1, "Rotation3": 1, "Rotation4": 0}
     p_max = {"Rotation1": 1, "Rotation2": 1, "Rotation3": 2, "Rotation4": 2}
     
