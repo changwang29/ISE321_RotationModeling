@@ -6,6 +6,7 @@ from flask import Flask, render_template, url_for, request, session
 from flask_sqlalchemy import SQLAlchemy  # This module is used for database management 
 import os # set the path of the databse relative to the Flask app
 from datetime import datetime 
+import pandas as pd 
 
 # Database
 basedir = os.path.abspath(os.path.dirname(__file__)) # Get the path of current file: base directory
@@ -111,6 +112,11 @@ def myData2():
   residentDatas = Store_Resident_data.query.all()
   return render_template('myData2.html', residentDatas=residentDatas)
 
+@app.route('/table')
+def table():
+	# converting csv to html
+	data = pd.read_csv('output_data.csv')
+	return render_template('table.html', tables=[data.to_html()], titles=[''])
 
 
 def calculate(form):
