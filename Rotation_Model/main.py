@@ -7,7 +7,9 @@ from flask_sqlalchemy import SQLAlchemy  # This module is used for database mana
 import os # set the path of the databse relative to the Flask app
 from datetime import datetime 
 import pandas as pd 
-from new import model, constraints, solve, getData
+import new
+# from new import model, constraints, solve, getData
+
 
 # Database
 basedir = os.path.abspath(os.path.dirname(__file__)) # Get the path of current file: base directory
@@ -263,7 +265,7 @@ def myData2():
 @app.route('/table')
 def table():
 	# converting csv to html
-	data = pd.read_csv('/Users/chang/Desktop/School/Fall2022/ISE321_model/ISE321_RotationModeling/Rotation_Model/output_data.csv')
+	data = pd.read_csv('/Users/chang/Desktop/School/Fall2022/ISE321_model/ISE321_RotationModeling/Rotation_Model/output.csv')
 	return render_template('table.html', tables=[data.to_html()], titles=[''])
 
 @app.route('/runModel', methods=['GET'])
@@ -276,8 +278,8 @@ def calculate(form):
   return result 
   
 def model():
-  result = "a"
-  return result
+  new.main()
+  return "function works"
   
 
 if __name__ == "__main__":

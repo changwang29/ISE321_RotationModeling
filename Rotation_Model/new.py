@@ -7,6 +7,7 @@ import numpy as np
 from numpy import nan
 import sqlite3
 from pandas import read_sql_table, read_sql_query
+import re
 
 def main():
 
@@ -209,11 +210,24 @@ def constraints(m, p_min, p_max, dict,x,y):
 def solve(m):
     m.optimize()
     a = m.getObjective()
-    print(a.getValue())
+    
+    
+    # output list is where we store the list of x variables when it's equal to 1
+    output = []
     for v in m.getVars():
         if v.x == 1: # When assign the resident to this rotation in the block 
             # print('%s %g' % (v.varName,v.x))
-            print(v.varName)
+            if v.varName[0] == 'x':
+                print(v.varName) 
+                output.append(re.split(',+', v.varName.strip(' x[]')))
+            # varName's type is String. We need to strip unnecessary parts and store in the list 
+            
+            # output.append(re.split(',+', v.varName.strip(' x[]')))
+
+    # Store everything in a table group by resident name
+    num = np.array(output)
+    sch = pd.DataFrame(num, columns=['Resident','Rotation','Block'])
+    sch.to_csv('./output.csv', index = False)
 
 
 if __name__ == "__main__":

@@ -19,7 +19,7 @@ app = Flask(__name__)
 def table():
 	
 	# converting csv to html
-	data = pd.read_csv('output_data.csv')
+	data = pd.read_csv('/Users/lll/project/solvertool/ISE321_RotationModeling/Rotation_Model/templates/output_data.csv')
 	return render_template('table.html', tables=[data.to_html()], titles=[''])
 
 
